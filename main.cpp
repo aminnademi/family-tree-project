@@ -47,6 +47,9 @@ public:
 
     TreeNode *findNode(const string &value, TreeNode *node) // returns the pointer to the node with an specific value
     {
+        if (node == NULL)
+            return;
+
         if (node->data == value)
         {
             return node;
