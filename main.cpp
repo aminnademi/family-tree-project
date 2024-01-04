@@ -95,6 +95,20 @@ public:
         parentNode->children.push_back(childNode);
     }
 
+    void delNode(const string &value) // adds a child to a parent
+    {
+        TreeNode *node = findNode(value, root);
+
+        if (node == NULL)
+        {
+            cout << "ERROR! no such parent exists\n";
+            return;
+        }
+
+        delete node;
+        node = nullptr;
+    }
+
     void printTree() // prints the whole tree
     {
         printSubTree(root, 0);
