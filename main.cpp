@@ -88,21 +88,16 @@ public:
 
     void addNode(const string &parentValue, const string &childValue)
     {
-        TreeNode *parentNode;
+        TreeNode *parentNode = findNode(parentValue, root);
 
-        if (rootValue.empty())
+        if (parentNode == NULL)
         {
-            rootValue = parentValue;
-            parentNode = getNode(rootValue);
-        }
-        else
-        {
-            parentNode = getNode(parentValue);
+            cout << "ERROR! no such parent exists";
+            return;
         }
 
         TreeNode *childNode = new TreeNode(childValue);
         parentNode->children.push_back(childNode);
-        nodeMap[childValue] = childNode;
     }
 
     void printTree()
