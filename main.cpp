@@ -90,12 +90,12 @@ public:
         parentNode->children.push_back(childNode);
     }
 
-    void printTree()
+    void printTree() // prints the whole tree
     {
         printSubTree(root, 0);
     }
 
-    void printSubTree(TreeNode *root, int depth)
+    void printSubTree(TreeNode *root, int depth) // prints a sub tree
     {
         for (int i = 0; i < depth; ++i)
         {
