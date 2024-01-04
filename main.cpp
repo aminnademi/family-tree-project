@@ -64,9 +64,9 @@ public:
             return node;
         }
 
-        for (size_t i = 0; i < node->children.size(); i++)
+        for (TreeNode *i : node->children)
         {
-            TreeNode *n = findNode(value, node->children[i]);
+            TreeNode *n = findNode(value, i);
             if (n != NULL)
             {
                 return n;
