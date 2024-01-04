@@ -16,8 +16,14 @@ class Tree
 {
 private:
     TreeNode *root = new TreeNode("pedarJad");
+    size_t size = 1;
 
 public:
+    int getSize() // returns the number of nodes in the tree
+    {
+        return size;
+    }
+
     int findHeight() // returns the hight of the tree
     {
         return findSubHeight(root);
@@ -70,6 +76,7 @@ public:
 
         TreeNode *childNode = new TreeNode(childValue, parentNode);
         parentNode->children.push_back(childNode);
+        size++;
     }
 
     void delNode(const string &value) // adds a child to a parent
