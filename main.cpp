@@ -123,15 +123,14 @@ int main()
     while (true)
     {
         string parent, child;
-        cout << "Enter parent and child node values (enter 'exit' to exit): ";
-        cin >> parent;
-
+        cout << "Enter the parent values (enter 'exit' to exit): ";
+        getline(cin, parent);
         if (parent == "exit")
         {
             break;
         }
-
-        cin >> child;
+        cout << "Enter the child values: ";
+        getline(cin, child);
         tree.addNode(parent, child);
     }
 
