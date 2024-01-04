@@ -102,10 +102,16 @@ public:
 
         if (node == NULL)
         {
-            cout << "ERROR! no such parent exists\n";
+            cout << "ERROR! no such node exists\n";
             return;
         }
-
+        for (size_t i = 0; i < node->parent->children.size(); i++)
+        {
+            if (node->parent->children[i]->data == value)
+            {
+                node->parent->children.erase(node->parent->children.begin() + i);
+            }
+        }
         delete node;
         node = nullptr;
     }
@@ -148,7 +154,6 @@ int main()
         getline(cin, child);
         tree.addNode(parent, child);
     }
-
     cout << "Tree structure:" << endl;
     tree.printTree();
 }
