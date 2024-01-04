@@ -63,12 +63,23 @@ public:
         return NULL;
     }
 
-    bool isAncestor(const string &ancestor, const string &descendant) // returns if one is the ancestor of the other
+    bool isAncestor(const string &ancestor, const string &descendant) // returns whether one is the ancestor of the other
     {
         TreeNode *Ancestor = findNode(ancestor, root);
         TreeNode *Descendant = findNode(descendant, Ancestor);
         if (Descendant != NULL)
             return true;
+        return false;
+    }
+
+    bool areSiblings(const string &person1, const string &person2) // returns whether they are siblings
+    {
+        TreeNode *Person1 = findNode(person1, root);
+        for (TreeNode *i : Person1->parent->children)
+        {
+            if (i->data == person2)
+                return true;
+        }
         return false;
     }
 
