@@ -17,30 +17,6 @@ class Tree
 private:
     TreeNode *root = new TreeNode("pedarJad");
 
-    // void findPath(TreeNode *root, const string &target, vector<string> &path, vector<string> &resultPath)
-    // {
-    //     if (root == nullptr)
-    //         return;
-
-    //     path.push_back(root->data);
-
-    //     if (root->data == target)
-    //     {
-    //         resultPath = path;
-    //         return;
-    //     }
-
-    //     for (TreeNode *child : root->children)
-    //     {
-    //         findPath(child, target, path, resultPath);
-
-    //         if (!resultPath.empty())
-    //             return;
-    //     }
-
-    //     path.pop_back();
-    // }
-
 public:
     int findHeight() // returns the hight of the tree
     {
