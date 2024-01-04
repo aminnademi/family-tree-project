@@ -1,5 +1,4 @@
 #include <iostream>
-#include <unordered_map>
 #include <vector>
 
 using namespace std;
@@ -8,51 +7,29 @@ struct TreeNode
 {
     string data;
     vector<TreeNode *> children;
+    TreeNode *parent;
 
-    TreeNode(const string &value) : data(value) {}
+    TreeNode(const string &value, TreeNode *Parent = NULL) : data(value) { parent = Parent; }
 };
 
 class Tree
 {
 private:
-    unordered_map<string, TreeNode *> nodeMap;
-    string rootValue;
+    TreeNode *root = new TreeNode("pedarJad");
+    size_t size = 1;
 
-    TreeNode *getNode(const string &value)
+public:
+    int getSize() // returns the number of nodes in the tree
     {
-        if (nodeMap.find(value) == nodeMap.end())
-        {
-            TreeNode *newNode = new TreeNode(value);
-            nodeMap[value] = newNode;
-            return newNode;
-        }
-        return nodeMap[value];
-    }
-    void findPath(TreeNode *root, const string &target, vector<string> &path, vector<string> &resultPath)
-    {
-        if (root == nullptr)
-            return;
-
-        path.push_back(root->data);
-
-        if (root->data == target)
-        {
-            resultPath = path;
-            return;
-        }
-
-        for (TreeNode *child : root->children)
-        {
-            findPath(child, target, path, resultPath);
-
-            if (!resultPath.empty())
-                return;
-        }
-
-        path.pop_back();
+        return size;
     }
 
-    int findHeight(TreeNode *node)
+    int findHeight() // returns the hight of the tree
+    {
+        return findSubHeight(root);
+    }
+
+    int findSubHeight(TreeNode *node) // returns the hight of the sub tree
     {
         if (node == nullptr)
             return 0;
@@ -61,55 +38,84 @@ private:
 
         for (TreeNode *child : node->children)
         {
-            int childHeight = findHeight(child);
+            int childHeight = findSubHeight(child);
             maxHeight = max(maxHeight, childHeight);
         }
 
         return maxHeight + 1;
     }
 
-public:
-    void addNode(const string &parentValue, const string &childValue)
+    TreeNode *findNode(const string &value, TreeNode *node) // returns the pointer to the node with an specific value
     {
-        TreeNode *parentNode;
-
-        if (rootValue.empty())
+        if (node->data == value)
         {
-            rootValue = parentValue;
-            parentNode = getNode(rootValue);
-        }
-        else
-        {
-            parentNode = getNode(parentValue);
+            return node;
         }
 
-        TreeNode *childNode = new TreeNode(childValue);
-        parentNode->children.push_back(childNode);
-        nodeMap[childValue] = childNode;
+        for (TreeNode *i : node->children)
+        {
+            TreeNode *n = findNode(value, i);
+            if (n != NULL)
+            {
+                return n;
+            }
+        }
+
+        return NULL;
     }
 
-    void printTree()
+    void addNode(const string &parentValue, const string &childValue) // adds a child to a parent
     {
-        TreeNode *root = getNode(rootValue);
-        if (root == nullptr)
+        TreeNode *parentNode = findNode(parentValue, root);
+
+        if (parentNode == NULL)
         {
+            cout << "ERROR! no such parent exists\n";
             return;
         }
 
-        printTree(root, 0);
+        TreeNode *childNode = new TreeNode(childValue, parentNode);
+        parentNode->children.push_back(childNode);
+        size++;
     }
-    void printTree(TreeNode *root, int depth)
+
+    void delNode(const string &value) // adds a child to a parent
+    {
+        TreeNode *node = findNode(value, root);
+
+        if (node == NULL)
+        {
+            cout << "ERROR! no such node exists\n";
+            return;
+        }
+        for (size_t i = 0; i < node->parent->children.size(); i++)
+        {
+            if (node->parent->children[i]->data == value)
+            {
+                node->parent->children.erase(node->parent->children.begin() + i);
+            }
+        }
+        delete node;
+        node = nullptr;
+    }
+
+    void printTree() // prints the whole tree
+    {
+        printSubTree(root, 0);
+    }
+
+    void printSubTree(TreeNode *root, int depth) // prints a sub tree
     {
         for (int i = 0; i < depth; ++i)
         {
-            cout << "  ";
+            cout << "--";
         }
 
-        cout << root->data << endl;
+        cout << "|" << root->data << endl;
 
         for (TreeNode *child : root->children)
         {
-            printTree(child, depth + 1);
+            printSubTree(child, depth + 1);
         }
     }
 };
@@ -121,18 +127,16 @@ int main()
     while (true)
     {
         string parent, child;
-        cout << "Enter parent and child node values (enter 'exit' to exit): ";
-        cin >> parent;
-
+        cout << "Enter the parent values (enter 'exit' to exit): ";
+        getline(cin, parent);
         if (parent == "exit")
         {
             break;
         }
-
-        cin >> child;
+        cout << "Enter the child values: ";
+        getline(cin, child);
         tree.addNode(parent, child);
     }
-
     cout << "Tree structure:" << endl;
     tree.printTree();
 }
