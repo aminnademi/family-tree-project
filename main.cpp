@@ -16,45 +16,45 @@ class Tree
 private:
     TreeNode *root = new TreeNode("pedarJad");
 
-    void findPath(TreeNode *root, const string &target, vector<string> &path, vector<string> &resultPath)
-    {
-        if (root == nullptr)
-            return;
+    // void findPath(TreeNode *root, const string &target, vector<string> &path, vector<string> &resultPath)
+    // {
+    //     if (root == nullptr)
+    //         return;
 
-        path.push_back(root->data);
+    //     path.push_back(root->data);
 
-        if (root->data == target)
-        {
-            resultPath = path;
-            return;
-        }
+    //     if (root->data == target)
+    //     {
+    //         resultPath = path;
+    //         return;
+    //     }
 
-        for (TreeNode *child : root->children)
-        {
-            findPath(child, target, path, resultPath);
+    //     for (TreeNode *child : root->children)
+    //     {
+    //         findPath(child, target, path, resultPath);
 
-            if (!resultPath.empty())
-                return;
-        }
+    //         if (!resultPath.empty())
+    //             return;
+    //     }
 
-        path.pop_back();
-    }
+    //     path.pop_back();
+    // }
 
-    int findHeight(TreeNode *node)
-    {
-        if (node == nullptr)
-            return 0;
+    // int findHeight(TreeNode *node)
+    // {
+    //     if (node == nullptr)
+    //         return 0;
 
-        int maxHeight = 0;
+    //     int maxHeight = 0;
 
-        for (TreeNode *child : node->children)
-        {
-            int childHeight = findHeight(child);
-            maxHeight = max(maxHeight, childHeight);
-        }
+    //     for (TreeNode *child : node->children)
+    //     {
+    //         int childHeight = findHeight(child);
+    //         maxHeight = max(maxHeight, childHeight);
+    //     }
 
-        return maxHeight + 1;
-    }
+    //     return maxHeight + 1;
+    // }
 
 public:
     TreeNode *findNode(const string &value, TreeNode *node) // returns the pointer to the node with an specific value
@@ -82,7 +82,7 @@ public:
 
         if (parentNode == NULL)
         {
-            cout << "ERROR! no such parent exists";
+            cout << "ERROR! no such parent exists\n";
             return;
         }
 
@@ -92,27 +92,21 @@ public:
 
     void printTree()
     {
-        TreeNode *root = getNode(rootValue);
-        if (root == nullptr)
-        {
-            return;
-        }
-
-        printTree(root, 0);
+        printSubTree(root, 0);
     }
 
-    void printTree(TreeNode *root, int depth)
+    void printSubTree(TreeNode *root, int depth)
     {
         for (int i = 0; i < depth; ++i)
         {
-            cout << "  ";
+            cout << "--";
         }
 
-        cout << root->data << endl;
+        cout << "|" << root->data << endl;
 
         for (TreeNode *child : root->children)
         {
-            printTree(child, depth + 1);
+            printSubTree(child, depth + 1);
         }
     }
 };
