@@ -64,6 +64,15 @@ public:
         return NULL;
     }
 
+    bool isAncestor(const string &ancestor, const string &descendant) // returns if one is the ancestor of the other
+    {
+        TreeNode *Ancestor = findNode(ancestor, root);
+        TreeNode *Descendant = findNode(descendant, Ancestor);
+        if (Descendant != NULL)
+            return true;
+        return false;
+    }
+
     void addNode(const string &parentValue, const string &childValue) // adds a child to a parent
     {
         TreeNode *parentNode = findNode(parentValue, root);
