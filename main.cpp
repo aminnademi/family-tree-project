@@ -1,5 +1,4 @@
 #include <iostream>
-#include <unordered_map>
 #include <vector>
 
 using namespace std;
@@ -15,8 +14,7 @@ struct TreeNode
 class Tree
 {
 private:
-    unordered_map<string, TreeNode *> nodeMap;
-    string rootValue;
+    TreeNode *root = new TreeNode("pedarJad");
 
     TreeNode *getNode(const string &value)
     {
@@ -69,6 +67,25 @@ private:
     }
 
 public:
+    TreeNode *findNode(const string &value, TreeNode *node)
+    {
+        if (node->data == value)
+        {
+            return node;
+        }
+
+        for (size_t i = 0; i < node->children.size(); i++)
+        {
+            TreeNode *n = findNode(value, node->children[i]);
+            if (n != NULL)
+            {
+                return n;
+            }
+        }
+
+        return NULL;
+    }
+
     void addNode(const string &parentValue, const string &childValue)
     {
         TreeNode *parentNode;
