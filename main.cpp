@@ -40,23 +40,28 @@ private:
     //     path.pop_back();
     // }
 
-    // int findHeight(TreeNode *node)
-    // {
-    //     if (node == nullptr)
-    //         return 0;
-
-    //     int maxHeight = 0;
-
-    //     for (TreeNode *child : node->children)
-    //     {
-    //         int childHeight = findHeight(child);
-    //         maxHeight = max(maxHeight, childHeight);
-    //     }
-
-    //     return maxHeight + 1;
-    // }
-
 public:
+    int findHeight() // returns the hight of the tree
+    {
+        return findSubHeight(root);
+    }
+
+    int findSubHeight(TreeNode *node) // returns the hight of the sub tree
+    {
+        if (node == nullptr)
+            return 0;
+
+        int maxHeight = 0;
+
+        for (TreeNode *child : node->children)
+        {
+            int childHeight = findSubHeight(child);
+            maxHeight = max(maxHeight, childHeight);
+        }
+
+        return maxHeight + 1;
+    }
+
     TreeNode *findNode(const string &value, TreeNode *node) // returns the pointer to the node with an specific value
     {
         if (node->data == value)
