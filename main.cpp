@@ -51,17 +51,13 @@ public:
             return;
 
         if (node->data == value)
-        {
             return node;
-        }
 
         for (TreeNode *i : node->children)
         {
             TreeNode *n = findNode(value, i);
             if (n != NULL)
-            {
                 return n;
-            }
         }
 
         return NULL;
@@ -103,9 +99,7 @@ public:
         for (size_t i = 0; i < node->parent->children.size(); i++)
         {
             if (node->parent->children[i]->data == value)
-            {
                 node->parent->children.erase(node->parent->children.begin() + i);
-            }
         }
         delete node;
         node = nullptr;
