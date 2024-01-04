@@ -16,16 +16,6 @@ class Tree
 private:
     TreeNode *root = new TreeNode("pedarJad");
 
-    TreeNode *getNode(const string &value)
-    {
-        if (nodeMap.find(value) == nodeMap.end())
-        {
-            TreeNode *newNode = new TreeNode(value);
-            nodeMap[value] = newNode;
-            return newNode;
-        }
-        return nodeMap[value];
-    }
     void findPath(TreeNode *root, const string &target, vector<string> &path, vector<string> &resultPath)
     {
         if (root == nullptr)
@@ -67,7 +57,7 @@ private:
     }
 
 public:
-    TreeNode *findNode(const string &value, TreeNode *node)
+    TreeNode *findNode(const string &value, TreeNode *node) // returns the pointer to the node with an specific value
     {
         if (node->data == value)
         {
@@ -86,7 +76,7 @@ public:
         return NULL;
     }
 
-    void addNode(const string &parentValue, const string &childValue)
+    void addNode(const string &parentValue, const string &childValue) // adds a child to a parent
     {
         TreeNode *parentNode = findNode(parentValue, root);
 
@@ -110,6 +100,7 @@ public:
 
         printTree(root, 0);
     }
+
     void printTree(TreeNode *root, int depth)
     {
         for (int i = 0; i < depth; ++i)
