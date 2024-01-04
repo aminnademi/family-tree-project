@@ -7,8 +7,9 @@ struct TreeNode
 {
     string data;
     vector<TreeNode *> children;
+    TreeNode *parent;
 
-    TreeNode(const string &value) : data(value) {}
+    TreeNode(const string &value, TreeNode *Parent = NULL) : data(value) { parent = Parent; }
 };
 
 class Tree
@@ -91,7 +92,7 @@ public:
             return;
         }
 
-        TreeNode *childNode = new TreeNode(childValue);
+        TreeNode *childNode = new TreeNode(childValue, parentNode);
         parentNode->children.push_back(childNode);
     }
 
