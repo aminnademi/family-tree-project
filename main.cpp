@@ -12,8 +12,8 @@ struct TreeNode
     TreeNode *parent;
     int depth;
 
-    TreeNode(const string &value, TreeNode *Parent = NULL, const int &Depth = 0) : data(value), parent(Parent),
-                                                                                   depth(Depth) {}
+    TreeNode(const string &value, TreeNode *Parent = nullptr, const int &Depth = 0) : data(value), parent(Parent),
+                                                                                      depth(Depth) {}
 };
 
 class Tree
@@ -51,8 +51,8 @@ public:
 
     TreeNode *findNode(const string &value, TreeNode *node) // returns the pointer to the node with an specific value in a sub tree
     {
-        if (node == NULL)
-            return NULL;
+        if (node == nullptr)
+            return nullptr;
 
         if (node->data == value)
             return node;
@@ -60,18 +60,18 @@ public:
         for (TreeNode *i : node->children)
         {
             TreeNode *n = findNode(value, i);
-            if (n != NULL)
+            if (n != nullptr)
                 return n;
         }
 
-        return NULL;
+        return nullptr;
     }
 
     bool isAncestor(const string &ancestor, const string &descendant) // returns whether one is the ancestor of the other
     {
         TreeNode *Ancestor = findNode(ancestor, root);
         TreeNode *Descendant = findNode(descendant, Ancestor);
-        if (Descendant != NULL)
+        if (Descendant != nullptr)
             return true;
         return false;
     }
@@ -126,7 +126,7 @@ public:
     {
         TreeNode *parentNode = findNode(parentValue, root);
 
-        if (parentNode == NULL)
+        if (parentNode == nullptr)
         {
             cout << "ERROR! no such parent exists\n";
             return;
@@ -141,7 +141,7 @@ public:
     {
         TreeNode *node = findNode(value, root);
 
-        if (node == NULL)
+        if (node == nullptr)
         {
             cout << "ERROR! no such node exists\n";
             return;
