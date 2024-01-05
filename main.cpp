@@ -8,8 +8,10 @@ struct TreeNode
     string data;
     vector<TreeNode *> children;
     TreeNode *parent;
+    int depth;
 
-    TreeNode(const string &value, TreeNode *Parent = NULL) : data(value) { parent = Parent; }
+    TreeNode(const string &value, TreeNode *Parent = NULL, const int &Depth = 0) : data(value), parent(Parent),
+                                                                                   depth(Depth) {}
 };
 
 class Tree
@@ -45,7 +47,7 @@ public:
         return maxHeight + 1;
     }
 
-    TreeNode *findNode(const string &value, TreeNode *node) // returns the pointer to the node with an specific value
+    TreeNode *findNode(const string &value, TreeNode *node) // returns the pointer to the node with an specific value in a sub tree
     {
         if (node == NULL)
             return;
@@ -83,6 +85,20 @@ public:
         return false;
     }
 
+    bool areCousins(const string &person1, const string &person2) // returns whether they are siblings
+    {
+        TreeNode *Person1 = findNode(person1, root);
+        for (TreeNode *i : Person1->parent->children)
+        {
+            if (i->data == person2)
+                return false;
+        }
+        TreeNode *Person2 = findNode(person2, root);
+        if (Person1->depth == Person2->depth)
+            return true;
+        return false;
+    }
+
     void addNode(const string &parentValue, const string &childValue) // adds a child to a parent
     {
         TreeNode *parentNode = findNode(parentValue, root);
@@ -93,7 +109,7 @@ public:
             return;
         }
 
-        TreeNode *childNode = new TreeNode(childValue, parentNode);
+        TreeNode *childNode = new TreeNode(childValue, parentNode, parentNode->depth + 1);
         parentNode->children.push_back(childNode);
         size++;
     }
