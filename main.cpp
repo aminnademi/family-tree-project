@@ -1,5 +1,7 @@
 #include <iostream>
 #include <vector>
+#include <deque>
+#include <fstream>
 
 using namespace std;
 
@@ -50,7 +52,7 @@ public:
     TreeNode *findNode(const string &value, TreeNode *node) // returns the pointer to the node with an specific value in a sub tree
     {
         if (node == NULL)
-            return;
+            return NULL;
 
         if (node->data == value)
             return node;
@@ -172,6 +174,34 @@ public:
             printSubTree(child, depth + 1);
         }
     }
+
+    void createJson() // creates a json file of the tree in Breadth first order
+    {
+        ofstream file("tree_data.json");
+        file << "{\n";
+        deque<TreeNode *> queue;
+        queue.push_back(root);
+        while (queue.size() > 0)
+        {
+            TreeNode *tmp = queue.front();
+            queue.pop_front();
+            file << "\"" << tmp->data << "\": [";
+            for (int j = 0; j < tmp->children.size(); j++)
+            {
+                TreeNode *i = tmp->children[j];
+                if (j == tmp->children.size() - 1)
+                    file << "\"" << i->data << "\"";
+                else
+                    file << "\"" << i->data << "\", ";
+                queue.push_back(i);
+            }
+            if (queue.size() == 0)
+                file << "]";
+            else
+                file << "], ";
+        }
+        file << "\n}";
+    }
 };
 
 int main()
@@ -193,4 +223,5 @@ int main()
     }
     cout << "Tree structure:" << endl;
     tree.printTree();
+    tree.createJson();
 }
