@@ -99,6 +99,27 @@ public:
         return false;
     }
 
+    TreeNode *lowestCommonAncestor(const string &person1, const string &person2) // returns the lowest common ancestor
+    {
+
+        TreeNode *Person1 = findNode(person1, root)->parent;
+        TreeNode *Person2 = findNode(person2, root)->parent;
+        while (Person1->depth != Person2->depth)
+        {
+            if (Person1->depth > Person2->depth)
+                Person1 = Person1->parent;
+            else
+                Person2 = Person2->parent;
+        }
+        while (true)
+        {
+            if (Person1->data == Person2->data)
+                return Person1;
+            Person1 = Person1->parent;
+            Person2 = Person2->parent;
+        }
+    }
+
     void addNode(const string &parentValue, const string &childValue) // adds a child to a parent
     {
         TreeNode *parentNode = findNode(parentValue, root);
