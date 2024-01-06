@@ -284,7 +284,7 @@ public:
     }
 };
 
-void removeFamilyMembers(Tree &tree)
+void removeFamilyMembers(Tree &tree) // for removing members from the tree
 {
     cout << "Your family tree: " << endl;
     tree.printTree();
@@ -307,7 +307,7 @@ void removeFamilyMembers(Tree &tree)
     tree.createJson();
 }
 
-void addFamilyMembers(Tree &tree)
+void addFamilyMembers(Tree &tree) // for adding members to the tree
 {
     cout << "Your family tree: " << endl;
     tree.printTree();
@@ -332,7 +332,7 @@ void addFamilyMembers(Tree &tree)
     tree.createJson();
 }
 
-void tools(Tree &tree)
+void tools(Tree &tree) // menu of tree functionalities
 {
     while (true)
     {
