@@ -188,7 +188,9 @@ public:
 
     void printTree() // prints the whole tree
     {
+        cout << endl;
         printSubTree(root, 0);
+        cout << endl;
     }
 
     void printSubTree(TreeNode *root, int depth) // prints a sub tree
@@ -247,7 +249,7 @@ void removeFamilyMembers(Tree &tree)
     cout << "Your family tree: " << endl;
     tree.printTree();
 
-    cout << "\nModifing the family tree: \n";
+    cout << "Modifing the family tree: \n";
     while (true)
     {
         string individual;
@@ -270,7 +272,7 @@ void addFamilyMembers(Tree &tree)
     cout << "Your family tree: " << endl;
     tree.printTree();
 
-    cout << "\nModifing the family tree: \n";
+    cout << "Modifing the family tree: \n";
     while (true)
     {
         string parent, child;
