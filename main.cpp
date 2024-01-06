@@ -20,12 +20,23 @@ class Tree
 {
 private:
     TreeNode *root = new TreeNode("pedarJad");
-    size_t size = 1;
 
 public:
     int getSize() // returns the number of nodes in the tree
     {
-        return size;
+        return getSubSize(root);
+    }
+
+    int getSubSize(TreeNode *root)
+    {
+        if (root == nullptr)
+            return 0;
+
+        int size = 0;
+        for (TreeNode *i : root->children)
+            size += getSubSize(i);
+
+        return size + 1;
     }
 
     int findHeight() // returns the hight of the tree
@@ -164,7 +175,6 @@ public:
 
         TreeNode *childNode = new TreeNode(childValue, parentNode, parentNode->depth + 1);
         parentNode->children.push_back(childNode);
-        size++;
     }
 
     void delNode(const string &value) // adds a child to a parent
@@ -183,7 +193,6 @@ public:
         }
         delete node;
         node = nullptr;
-        size--;
         cout << value << " was removed\n";
     }
 
@@ -295,20 +304,20 @@ void addFamilyMembers(Tree &tree)
 
 void tools(Tree &tree)
 {
-    cout << "1. Number of individuals\n"
-         << "2. Number of generations\n"
-         << "3. Ancestor check\n"
-         << "4. Siblings check\n"
-         << "5. Cousins check\n"
-         << "6. Find last common ancestor\n"
-         << "7. Add more individuals\n"
-         << "8. Remove individuals\n"
-         << "9. Print the tree\n";
     while (true)
     {
+        cout << "1. Number of individuals\n"
+             << "2. Number of generations\n"
+             << "3. Ancestor check\n"
+             << "4. Siblings check\n"
+             << "5. Cousins check\n"
+             << "6. Find last common ancestor\n"
+             << "7. Add more individuals\n"
+             << "8. Remove individuals\n"
+             << "9. Print the family tree\n";
         cout << "Choose your task by entering 1 to 8 (enter 'exit' to exit): ";
         string input;
-        cin >> input;
+        getline(cin, input);
         if (input == "exit")
         {
             cout << "Have a nice day!";
@@ -320,7 +329,7 @@ void tools(Tree &tree)
         }
         else if (input == "2")
         {
-            cout << tree.findHeight();
+            cout << tree.findHeight() << endl;
         }
         else if (input == "3")
         {
@@ -330,9 +339,9 @@ void tools(Tree &tree)
             cout << "Enter the name of the descendant: ";
             getline(cin, d);
             if (tree.isAncestor(a, d))
-                cout << "Yes! " << a << " is the ancestor of " << d << endl;
+                cout << "Yes! " << a << " is " << d << "'s ancestor" << endl;
             else
-                cout << "No! " << a << " is not the ancestor of " << d << endl;
+                cout << "No! " << a << " is not " << d << "'s ancestor" << endl;
         }
         else if (input == "4")
         {
@@ -369,7 +378,8 @@ void tools(Tree &tree)
             getline(cin, a);
             cout << "Enter the second person's name: ";
             getline(cin, b);
-            cout << "Their last common ancestor is: " << tree.lastCommonAncestor(a, b)->data << endl;
+            cout << tree.lastCommonAncestor(a, b)->data
+                 << "is their last common ancestor" << endl;
         }
         else if (input == "7")
         {
