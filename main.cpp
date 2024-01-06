@@ -183,6 +183,7 @@ public:
         }
         delete node;
         node = nullptr;
+        size--;
         cout << value << " was removed\n";
     }
 
