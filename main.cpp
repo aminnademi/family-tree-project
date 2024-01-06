@@ -89,6 +89,7 @@ public:
         TreeNode *Descendant = findNode(descendant, Ancestor);
         if (Descendant != nullptr)
             return true;
+        cout << "Descendant didn't exist!\n";
         return false;
     }
 
