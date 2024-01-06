@@ -253,6 +253,35 @@ public:
         }
         file << "\n}";
     }
+
+    int diameter() // returns the tree diameter
+    {
+        int h = 0;
+        return subDiameter(root, &h) - 2;
+    }
+
+    int subDiameter(TreeNode *root, int *h) // returns a sub tree diameter
+    {
+        vector<int> heights;
+        int maximum = 0;
+        for (int i = 0; i < root->children.size(); i++)
+        {
+            heights.push_back(0);
+            maximum = max(maximum, subDiameter(root->children[i], &heights[i]));
+        }
+        int m1 = 0, m2 = 0;
+        for (int i : heights)
+        {
+            int t = i;
+            if (t > m2)
+                swap(m2, t);
+            if (t > m1)
+                swap(m1, t);
+        }
+        *h += m2 + 1;
+        maximum = max(maximum, m1 + m2 + 1);
+        return maximum;
+    }
 };
 
 void removeFamilyMembers(Tree &tree)
