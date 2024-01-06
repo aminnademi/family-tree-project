@@ -338,14 +338,15 @@ void tools(Tree &tree)
     {
         cout << "1. Number of individuals\n"
              << "2. Number of generations\n"
-             << "3. Ancestor check\n"
-             << "4. Siblings check\n"
-             << "5. Cousins check\n"
-             << "6. Find last common ancestor\n"
-             << "7. Add more individuals\n"
-             << "8. Remove individuals\n"
-             << "9. Print the family tree\n";
-        cout << "Choose your task by entering 1 to 8 (enter 'exit' to exit): ";
+             << "3. Find the furthest relatives\n"
+             << "4. Ancestor check\n"
+             << "5. Siblings check\n"
+             << "6. Cousins check\n"
+             << "7. Find last common ancestor\n"
+             << "8. Add more individuals\n"
+             << "9. Remove individuals\n"
+             << "10. Print the family tree\n";
+        cout << "Choose your task by entering 1 to 10 (enter 'exit' to exit): ";
         string input;
         getline(cin, input);
         if (input == "exit")
@@ -363,6 +364,10 @@ void tools(Tree &tree)
         }
         else if (input == "3")
         {
+            cout << "The furthest family members are " << tree.diameter() << " members apart" << endl;
+        }
+        else if (input == "4")
+        {
             string a, d;
             cout << "Enter the name of the ancestor: ";
             getline(cin, a);
@@ -373,7 +378,7 @@ void tools(Tree &tree)
             else
                 cout << "No! " << a << " is not " << d << "'s ancestor" << endl;
         }
-        else if (input == "4")
+        else if (input == "5")
         {
             string a, b;
             cout << "Enter the first person's name: ";
@@ -387,7 +392,7 @@ void tools(Tree &tree)
                 cout << "No! "
                      << "They are not siblings." << endl;
         }
-        else if (input == "5")
+        else if (input == "6")
         {
             string a, b;
             cout << "Enter the first person's name: ";
@@ -401,7 +406,7 @@ void tools(Tree &tree)
                 cout << "No! "
                      << "They are not cousins." << endl;
         }
-        else if (input == "6")
+        else if (input == "7")
         {
             string a, b;
             cout << "Enter the first person's name: ";
@@ -411,15 +416,15 @@ void tools(Tree &tree)
             cout << tree.lastCommonAncestor(a, b)->data
                  << "is their last common ancestor" << endl;
         }
-        else if (input == "7")
+        else if (input == "8")
         {
             addFamilyMembers(tree);
         }
-        else if (input == "8")
+        else if (input == "9")
         {
             removeFamilyMembers(tree);
         }
-        else if (input == "9")
+        else if (input == "10")
         {
             tree.printTree();
         }
