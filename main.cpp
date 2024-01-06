@@ -27,7 +27,7 @@ public:
         return getSubSize(root);
     }
 
-    int getSubSize(TreeNode *root)
+    int getSubSize(TreeNode *root) // returns the number of nodes in a sub tree
     {
         if (root == nullptr)
             return 0;
