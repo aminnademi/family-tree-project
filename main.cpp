@@ -254,23 +254,20 @@ public:
         file << "\n}";
     }
 
-    vector<vector<TreeNode *>> diameter() // returns the tree diameter
+    vector<TreeNode *> diameter() // returns the tree diameter
     {
-        vector<TreeNode *> head = furthestNode(root);
-        vector<vector<TreeNode *>> ans;
-        for (TreeNode *i : head)
-        {
-            vector<TreeNode *> tmp;
-            tmp.push_back(i);
-            ans.push_back(furthestNode(i));
-            ans.push_back(tmp);
-        }
-        return ans;
+        vector<TreeNode *> tmp;
+        TreeNode *head = furthestNode(root);
+        TreeNode *tail = furthestNode(head);
+        tmp.push_back(head);
+        tmp.push_back(tail);
+
+        return tmp;
     }
 
-    vector<TreeNode *> furthestNode(TreeNode *start) // return the furthest node to a node
+    TreeNode *furthestNode(TreeNode *start) // return the furthest node to a node
     {
-        vector<TreeNode *> furthest;
+        TreeNode *furthest;
         int len = 0;
 
         deque<int> cost;
@@ -291,12 +288,7 @@ public:
             if (len < c)
             {
                 len = c;
-                furthest.empty();
-                furthest.push_back(work);
-            }
-            else if (len == c)
-            {
-                furthest.push_back(work);
+                furthest = work;
             }
             if (work->parent != p and work->parent != nullptr)
             {
