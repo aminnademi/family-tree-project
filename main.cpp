@@ -19,9 +19,14 @@ struct TreeNode
 class Tree
 {
 private:
-    TreeNode *root = new TreeNode("pedarJad");
+    TreeNode *root;
 
 public:
+    Tree(const string &pedarJad)
+    {
+        root = new TreeNode(pedarJad);
+    }
+
     int getSize() // returns the number of nodes in the tree
     {
         return getSubSize(root);
@@ -309,7 +314,7 @@ public:
         return furthest;
     }
 
-    // int subDiameterLength(TreeNode *root, int *h) // returns a sub tree diameter
+    // int subDiameterLength(TreeNode *root, int *h) // returns a sub tree diameter size
     // {
     //     vector<int> heights;
     //     int maximum = 0;
@@ -486,9 +491,17 @@ void tools(Tree &tree) // menu of tree functionalities
     }
 }
 
+Tree createATree() // creates a family tree by asking for the first member's name
+{
+    cout << "Who is your first family member? ";
+    string name;
+    getline(cin, name);
+    return Tree(name);
+}
+
 int main()
 {
-    Tree tree;
+    Tree tree = createATree();
     addFamilyMembers(tree);
     tools(tree);
     return 0;
