@@ -254,34 +254,98 @@ public:
         file << "\n}";
     }
 
-    int diameter() // returns the tree diameter
+    vector<TreeNode *> diameter() // returns the tree diameter
     {
-        int h = 0;
-        return subDiameter(root, &h) - 2;
+        TreeNode *head = furthestNode(root);
+        cout << endl
+             << head->data << endl;
+        TreeNode *tail = furthestNode(head);
+        cout << endl
+             << tail->data << endl;
+        vector<TreeNode *> ans;
+        ans.push_back(head);
+        ans.push_back(tail);
+        return ans;
     }
 
-    int subDiameter(TreeNode *root, int *h) // returns a sub tree diameter
+    TreeNode *furthestNode(TreeNode *start) // return the furthest node to a node
     {
-        vector<int> heights;
-        int maximum = 0;
-        for (int i = 0; i < root->children.size(); i++)
+        // int size = getSize();
+        // bool visited[size];
+        // for (int i = 0; i < size; i++)
+        // {
+        //     visited[i] = false;
+        // }
+        TreeNode *furthest;
+        int len = 0;
+
+        deque<int> cost;
+        deque<TreeNode *> nodeQue;
+        deque<TreeNode *> previous;
+        cost.push_back(0);
+        nodeQue.push_back(start);
+        previous.push_back(nullptr);
+
+        while (nodeQue.size() > 0)
         {
-            heights.push_back(0);
-            maximum = max(maximum, subDiameter(root->children[i], &heights[i]));
+            TreeNode *work = nodeQue.front();
+            nodeQue.pop_front();
+            TreeNode *p = previous.front();
+            previous.pop_front();
+            int c = cost.front();
+            cost.pop_front();
+            cout << "working on " << work->data << endl;
+            if (len < c)
+            {
+                len = c;
+                furthest = work;
+            }
+            // cout << "here p is " << p->data << endl;
+            if (work->parent != p and work->parent != nullptr)
+            {
+                // cout << p->data << " and " << work->parent->data << endl;
+                cout << "in parent " << work->data << endl;
+                nodeQue.push_back(work->parent);
+                previous.push_back(work);
+                cost.push_back(c + 1);
+            }
+            for (TreeNode *i : work->children)
+            {
+                if (i != p and i != nullptr)
+                {
+                    nodeQue.push_back(i);
+                    previous.push_back(work);
+                    cost.push_back(c + 1);
+                }
+            }
         }
-        int m1 = 0, m2 = 0;
-        for (int i : heights)
-        {
-            int t = i;
-            if (t > m2)
-                swap(m2, t);
-            if (t > m1)
-                swap(m1, t);
-        }
-        *h += m2 + 1;
-        maximum = max(maximum, m1 + m2 + 1);
-        return maximum;
+        // cout << furthest->data;
+        cout << "this";
+        return furthest;
     }
+
+    // int subDiameterLength(TreeNode *root, int *h) // returns a sub tree diameter
+    // {
+    //     vector<int> heights;
+    //     int maximum = 0;
+    //     for (int i = 0; i < root->children.size(); i++)
+    //     {
+    //         heights.push_back(0);
+    //         maximum = max(maximum, subDiameter(root->children[i], &heights[i]));
+    //     }
+    //     int m1 = 0, m2 = 0;
+    //     for (int i : heights)
+    //     {
+    //         int t = i;
+    //         if (t > m2)
+    //             swap(m2, t);
+    //         if (t > m1)
+    //             swap(m1, t);
+    //     }
+    //     *h += m2 + 1;
+    //     maximum = max(maximum, m1 + m2 + 1);
+    //     return maximum;
+    // }
 };
 
 void removeFamilyMembers(Tree &tree) // for removing members from the tree
@@ -351,7 +415,7 @@ void tools(Tree &tree) // menu of tree functionalities
         getline(cin, input);
         if (input == "exit")
         {
-            cout << "Have a nice day!";
+            cout << "Have a nice day!\n";
             return;
         }
         else if (input == "1")
@@ -362,10 +426,10 @@ void tools(Tree &tree) // menu of tree functionalities
         {
             cout << tree.findHeight() << endl;
         }
-        else if (input == "3")
-        {
-            cout << "The furthest family members are " << tree.diameter() << " members apart" << endl;
-        }
+        // else if (input == "3")
+        // {
+        //     cout << "The furthest family members are " << tree.diameter() << " members apart" << endl;
+        // }
         else if (input == "4")
         {
             string a, d;
@@ -440,5 +504,8 @@ int main()
     Tree tree;
     addFamilyMembers(tree);
     tools(tree);
+    vector<TreeNode *> print;
+    print = tree.diameter();
+    cout << print[0]->data << print[1]->data;
     return 0;
 }
