@@ -243,6 +243,7 @@ public:
         ofstream file("tree_data.json");
 
         file << "{\n";
+        file << "\"size\": " << getSize() << ", ";
         queue.push_back(root);
         while (queue.size() > 0)
         {
