@@ -178,7 +178,14 @@ public:
             cout << "Parent didn't exist!\n";
             return;
         }
-
+        for (TreeNode *i : parentNode->children)
+        {
+            if (i->data == childValue)
+            {
+                cout << "This parent already has a child with this information!\n";
+                return;
+            }
+        }
         TreeNode *childNode = new TreeNode(childValue, parentNode, parentNode->depth + 1);
         parentNode->children.push_back(childNode);
     }
