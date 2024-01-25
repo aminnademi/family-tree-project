@@ -1,4 +1,4 @@
-#include "SHA-256Generator.h"
+#include "include/SHA-256Generator.h"
 
 using namespace std;
 
@@ -219,7 +219,8 @@ SHA256::SHA256() : H{0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a,
                      0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3,
                      0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208,
                      0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2}
-{}
+{
+}
 
 string SHA256::calculateHash(string s)
 {

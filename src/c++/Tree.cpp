@@ -1,11 +1,11 @@
-#include "Tree.h"
+#include "include/Tree.h"
+#include <filesystem>
 
 using namespace std;
 
 TreeNode::TreeNode(const string &name, TreeNode *Parent, const int &Depth) : data(name), parent(Parent), depth(Depth) {}
 
-Tree::Tree(const string &greatAncestor) : root(new TreeNode(greatAncestor)) {}
-
+Tree::Tree(const string &greatAncestor) : root(new TreeNode(greatAncestor)) { createJson(); }
 
 void Tree::addNode(const string &parentName, const string &childName)
 {
@@ -204,7 +204,14 @@ void Tree::createJson()
         return;
 
     deque<TreeNode *> queue;
-    ofstream file("tree_data.json");
+    filesystem::path cwd = filesystem::current_path();
+    ofstream file(cwd.string() + "/../data/tree_data.json");
+    // cout << "------------------------" << endl
+    //      << "------------------------" << endl;
+    // cout << filesystem::current_path() << endl;
+    // cout << cwd.string() + "/../../data/tree_data.json" << endl;
+    // cout << "------------------------" << endl
+    //      << "------------------------" << endl;
 
     file << "{\n";
     file << "\"size\": " << findHeight() << ", ";
@@ -229,6 +236,7 @@ void Tree::createJson()
             file << "], ";
     }
     file << "\n}";
+    file.close();
 }
 
 int Tree::getSubSize(TreeNode *root)

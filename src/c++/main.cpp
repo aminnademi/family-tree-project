@@ -1,6 +1,6 @@
 #include <iostream>
-#include "Tree.h"
-#include "SHA-256Generator.h"
+#include "include/Tree.h"
+#include "include/SHA-256Generator.h"
 
 SHA256 sha256;
 
@@ -18,7 +18,7 @@ void addFamilyMembers(Tree &tree, bool display) // for adding members to the tre
     cout << "Modifying the family tree:\n";
     if (display)
         Note();
-        
+
     while (true)
     {
         string parent, child, parentHash, childHash;
@@ -91,7 +91,15 @@ void tools(Tree &tree) // menu of tree functionalities
             return;
         }
 
-        int choice = stoi(input);
+        int choice = 0;
+
+        try
+        {
+            choice = stoi(input);
+        }
+        catch (const std::exception &ex)
+        {
+        }
 
         switch (choice)
         {
@@ -195,6 +203,7 @@ void tools(Tree &tree) // menu of tree functionalities
             print = tree.diameter();
             cout << "The furthest family members hash are '" << print[0]->data << "' and '" << print[1]->data << "'\n";
         }
+        break;
 
         case 11:
             tree.printTree();
