@@ -1,6 +1,9 @@
 #include "include/Tree.h"
 #include <filesystem>
 
+#define RED "\033[31m"
+#define CYAN "\033[36m"
+
 using namespace std;
 
 TreeNode::TreeNode(const string &name, TreeNode *Parent, const int &Depth) : data(name), parent(Parent), depth(Depth) {}
@@ -12,14 +15,14 @@ void Tree::addNode(const string &parentName, const string &childName)
     TreeNode *parentNode = findNode(parentName, root);
     if (parentNode == nullptr)
     {
-        cout << "Parent didn't exist!\n";
+        cout << RED << "Parent didn't exist!\n";
         return;
     }
     for (TreeNode *i : parentNode->children)
     {
         if (i->data == childName)
         {
-            cout << "This parent already has a child with this information!\n";
+            cout << RED << "This parent already has a child with this information!\n";
             return;
         }
     }
@@ -51,7 +54,7 @@ void Tree::delNode(const string &name)
 
     if (node == nullptr)
     {
-        cout << "The person didn't exist\n";
+        cout << RED << "The person didn't exist\n";
         return;
     }
     for (size_t i = 0; i < node->parent->children.size(); i++)
@@ -78,7 +81,7 @@ int Tree::findSubHeight(const string &name)
     TreeNode *node = findNode(name, root);
     if (node == nullptr)
     {
-        cout << "The person didn't exist\n";
+        cout << RED << "The person didn't exist\n";
         return 0;
     }
 
@@ -98,13 +101,13 @@ bool Tree::isAncestor(const string &ancestor, const string &descendant)
     TreeNode *Ancestor = findNode(ancestor, root);
     if (Ancestor == nullptr)
     {
-        cout << "Ancestor didn't exist!\n";
+        cout << RED << "Ancestor didn't exist!\n";
         return NULL;
     }
     TreeNode *Descendant = findNode(descendant, Ancestor);
     if (Descendant != nullptr)
         return true;
-    cout << "Descendant didn't exist!\n";
+    cout << RED << "Descendant didn't exist!\n";
     return false;
 }
 
@@ -113,7 +116,7 @@ bool Tree::areSiblings(const string &person1, const string &person2)
     TreeNode *Person1 = findNode(person1, root);
     if (Person1 == nullptr)
     {
-        cout << "First person didn't exist!\n";
+        cout << RED << "First person didn't exist!\n";
         return NULL;
     }
     for (TreeNode *i : Person1->parent->children)
@@ -129,7 +132,7 @@ bool Tree::areCousins(const string &person1, const string &person2)
     TreeNode *Person1 = findNode(person1, root);
     if (Person1 == nullptr)
     {
-        cout << "First person didn't exist!\n";
+        cout << RED << "First person didn't exist!\n";
         return NULL;
     }
     for (TreeNode *i : Person1->parent->children)
@@ -140,7 +143,7 @@ bool Tree::areCousins(const string &person1, const string &person2)
     TreeNode *Person2 = findNode(person2, root);
     if (Person2 == nullptr)
     {
-        cout << "Second person didn't exist!\n";
+        cout << RED << "Second person didn't exist!\n";
         return NULL;
     }
     if (Person1->depth == Person2->depth)
@@ -153,13 +156,13 @@ TreeNode *Tree::lowestCommonAncestor(const string &person1, const string &person
     TreeNode *Person1 = findNode(person1, root);
     if (Person1 == nullptr)
     {
-        cout << "First person didn't exist!\n";
+        cout << RED << "First person didn't exist!\n";
         return nullptr;
     }
     TreeNode *Person2 = findNode(person2, root);
     if (Person2 == nullptr)
     {
-        cout << "Second person didn't exist!\n";
+        cout << RED << "Second person didn't exist!\n";
         return nullptr;
     }
     Person1 = Person1->parent;
@@ -206,12 +209,6 @@ void Tree::createJson()
     deque<TreeNode *> queue;
     filesystem::path cwd = filesystem::current_path();
     ofstream file(cwd.string() + "/../data/tree_data.json");
-    // cout << "------------------------" << endl
-    //      << "------------------------" << endl;
-    // cout << filesystem::current_path() << endl;
-    // cout << cwd.string() + "/../../data/tree_data.json" << endl;
-    // cout << "------------------------" << endl
-    //      << "------------------------" << endl;
 
     file << "{\n";
     file << "\"size\": " << findHeight() << ", ";
@@ -297,6 +294,7 @@ TreeNode *Tree::furthestNode(TreeNode *start)
 
 void Tree::printSubTree(TreeNode *root, int depth)
 {
+    cout << CYAN;
     if (root == nullptr)
         return;
 
