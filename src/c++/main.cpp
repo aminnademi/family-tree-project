@@ -20,6 +20,7 @@ void Note()
 }
 
 void addFamilyMembers(Tree &tree, bool display) // for adding members to the tree
+/* calls print tree twice, create json and addNode once; each are O(n) hence, at the end, O(n) */
 {
     cout << YELLOW;
     cout << "Your family tree:\n";
@@ -52,6 +53,7 @@ void addFamilyMembers(Tree &tree, bool display) // for adding members to the tre
 }
 
 void removeFamilyMembers(Tree &tree) // for removing members from the tree
+/* calls print tree twice, create json and addNode once; each are O(n) hence, at the end, O(n) */
 {
     cout << YELLOW;
     cout << "Your family tree:\n";
